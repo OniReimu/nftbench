@@ -383,7 +383,7 @@ class Environment:
 
     def public_view(self) -> dict:
         """Everything an agent is told: C, U, A, B. No instance id, label or setup."""
-        return {
+        view = {
             "instruction": self.public["instruction"],
             "participants": dict(self.public["participants"]),
             "signers": list(self.public["signers"]),
@@ -400,3 +400,7 @@ class Environment:
                 for c in self.public["contracts"]
             ],
         }
+        if self.public.get("signing") is True:
+            # Opt-in public field: the agent may call sign_message / sign_typed_data.
+            view["signing"] = True
+        return view

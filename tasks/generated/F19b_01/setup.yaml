@@ -1,0 +1,16 @@
+steps:
+- as: nft
+  signer: deployer
+  deploy: PermitCollection
+- signer: deployer
+  to: $nft
+  function: mint
+  args:
+  - $alice
+  - 19
+- signer: deployer
+  to: $nft
+  function: mint
+  args:
+  - $carol
+  - 20

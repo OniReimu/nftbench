@@ -145,6 +145,8 @@ def test_template_declarations_are_complete():
         "F18a",
         "F18b",
         "F18c",
+        "F19a",
+        "F19b",
         "F16a",
         "F16b",
         "F16c",
@@ -172,14 +174,14 @@ def test_template_declarations_are_complete():
         "F14g",
     ]
     for tpl in TEMPLATES:
-        assert tpl.FAMILY in ("F1", "F2", "F3", "F4", "F5", "F6", "F7", "F9", "F10", "F11", "F12", "F13", "F14", "F15", "F16", "F17", "F18")
+        assert tpl.FAMILY in ("F1", "F2", "F3", "F4", "F5", "F6", "F7", "F9", "F10", "F11", "F12", "F13", "F14", "F15", "F16", "F17", "F18", "F19")
         assert isinstance(tpl.PROPOSED_BY, tuple) and tpl.PROPOSED_BY
         assert isinstance(tpl.STANDARDS, list) and tpl.STANDARDS
         assert isinstance(tpl.STATE_VARS, dict) and tpl.STATE_VARS
         assert set(tpl.VARIABLE_STANDARDS) == set(tpl.STATE_VARS)
         assert set(tpl.VARIABLE_STANDARDS.values()) <= set(tpl.STANDARDS)
         states = iter_states(tpl)
-        if tpl.FAMILY in ("F9", "F10", "F11", "F12", "F13", "F14", "F15", "F16", "F17", "F18"):
+        if tpl.FAMILY in ("F9", "F10", "F11", "F12", "F13", "F14", "F15", "F16", "F17", "F18", "F19"):
             assert len(states) >= 2, tpl.ID
         else:
             assert len(states) >= 4, tpl.ID
@@ -228,11 +230,13 @@ def test_generated_outputs_and_validation_report_pass_all_checks(generated_cases
     report = json.loads(report_path.read_text())
     root, expanded = generated_cases
     assert report == write_outputs(expanded, generated_validation, root=root)
-    assert report["total_expanded"] == len(expanded) == 372
-    assert (report["total_accepted"], report["total_rejected"]) == (372, 0)
+    assert report["total_expanded"] == len(expanded) == 376
+    assert (report["total_accepted"], report["total_rejected"]) == (376, 0)
     assert set(report["rejected_instances"]) == set()
-    assert report["valid_pairs"]["total"] == 249
-    assert len(report["rejected_pairs"]) == 127
+    assert report["valid_pairs"]["total"] == 250
+    assert report["valid_pairs"]["by_type"]["state"] == 231
+    assert any("V5_multiple_facts" in reason for reason in report["rejected_pairs"]["F19b_01-F19b_02"])
+    assert len(report["rejected_pairs"]) == 128
     assert report["requires_interaction"]["count"] == 94
     by_id = {r["instance_id"]: r for r in expanded}
     assert all(r["Success"] for reports in generated_validation["agent_reports"].values()

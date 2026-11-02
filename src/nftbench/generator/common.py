@@ -54,6 +54,8 @@ DEFAULT_BUDGET = {
 
 ROLE_LOWER_ADDR = {role: account.address.lower() for role, account in ACCOUNTS.items()}
 
+SIGNATURE_KINDS = ("signature_exists", "no_signature_except", "signature_used")
+
 
 def participants_dict(names: tuple[str, ...] = ("Alice", "Bob", "Carol")) -> dict[str, str]:
     return {name: ACCOUNTS[name.lower()].address for name in names}
@@ -114,12 +116,88 @@ def dump_yaml(data: dict) -> str:
     return yaml.safe_dump(data, sort_keys=False, default_flow_style=False, width=120)
 
 
+def is_signing_step(step: dict) -> bool:
+    """True for a reference step `{sign: sign_typed_data | sign_message, signer, arguments, save_as}`."""
+    return "sign" in step and "terminal" not in step
+
+
+def is_transaction_step(step: dict) -> bool:
+    return "terminal" not in step and "sign" not in step
+
+
+def signing_primary_type(step: dict) -> str:
+    """Primary type of a signing step: the EIP-712 primaryType, or `personal_message` for sign_message."""
+    if step["sign"] == "sign_message":
+        return "personal_message"
+    typed = step.get("arguments", {}).get("typed_data", {})
+    return typed.get("primaryType") or typed.get("primary_type") or ""
+
+
+def signature_refs(value) -> list[str]:
+    """Names of every `{signature: name}` reference nested in `value`, in order."""
+    if isinstance(value, dict):
+        if set(value) == {"signature"}:
+            return [value["signature"]]
+        return [name for item in value.values() for name in signature_refs(item)]
+    if isinstance(value, list):
+        return [name for item in value for name in signature_refs(item)]
+    return []
+
+
+def signing_reference_errors(oracle: dict, public: dict) -> list[str]:
+    """Static structure errors of a reference trajectory's signing steps (empty for a signature-free one)."""
+    steps = oracle.get("reference_trajectory", [])
+    signing = [s for s in steps if is_signing_step(s)]
+    refs_anywhere = [n for s in steps if "terminal" not in s for n in signature_refs(s.get("args", s.get("arguments", [])))]
+    if not signing and not refs_anywhere:
+        return []
+    errors: list[str] = []
+    if signing and not public.get("signing"):
+        errors.append("V2_signing_not_enabled: reference signs but public.yaml has no signing: true")
+    saved: dict[str, bool] = {}
+    for step in steps:
+        if "terminal" in step:
+            continue
+        if is_signing_step(step):
+            if step["sign"] not in ("sign_typed_data", "sign_message"):
+                errors.append(f"V2_unknown_signing_tool: {step['sign']!r}")
+            for name in signature_refs(step.get("arguments", {})):
+                if name not in saved:
+                    errors.append(f"V2_signature_undefined: {name!r} used before it is signed")
+                else:
+                    saved[name] = True
+            name = step.get("save_as")
+            if not name:
+                errors.append("V2_signature_unnamed: signing step has no save_as")
+            elif name in saved:
+                errors.append(f"V2_signature_duplicate: {name!r} saved twice")
+            else:
+                saved[name] = False
+        else:
+            for name in signature_refs(step.get("args", [])):
+                if name not in saved:
+                    errors.append(f"V2_signature_undefined: {name!r} used before it is signed")
+                else:
+                    saved[name] = True
+    for name, used in saved.items():
+        if not used:
+            errors.append(f"V2_signature_unused: {name!r} is signed but no later step uses it")
+    return errors
+
+
 def normalized_trajectory(oracle: dict) -> list[dict]:
     """Strip free-text terminal arguments so action comparison checks only executable/terminal choices."""
     out = []
     for step in oracle.get("reference_trajectory", []):
         if "terminal" in step:
             out.append({"terminal": step["terminal"]})
+        elif is_signing_step(step):
+            out.append({
+                "sign": step["sign"],
+                "signer": step["signer"],
+                "arguments": step.get("arguments", {}),
+                "save_as": step.get("save_as"),
+            })
         else:
             out.append({
                 "signer": step["signer"],
@@ -160,6 +238,15 @@ def compute_mechanism_signature(public: dict, setup: dict, oracle: dict, family:
     for role, acc in ACCOUNTS.items():
         addr_to_role.setdefault(acc.address.lower(), role)
 
+    sig_map: dict[str, str] = {}
+
+    def canon_sig(name):
+        if name is None:
+            return None
+        if name not in sig_map:
+            sig_map[name] = f"SIG{len(sig_map)}"
+        return sig_map[name]
+
     def canon_value(val, *, is_token_id: bool = False, is_timestamp: bool = False):
         if isinstance(val, bool):
             return val
@@ -194,6 +281,8 @@ def compute_mechanism_signature(public: dict, setup: dict, oracle: dict, family:
         if isinstance(val, list):
             return [canon_value(v) for v in val]
         if isinstance(val, dict):
+            if set(val) == {"signature"}:
+                return {"signature": canon_sig(val["signature"])}
             if "call" in val:
                 c = val["call"]
                 return {"call": c["function"], "to": canon_value(c["contract"]), "args": canon_args(c["function"], c.get("args", []))}
@@ -284,6 +373,14 @@ def compute_mechanism_signature(public: dict, setup: dict, oracle: dict, family:
     for step in oracle.get("reference_trajectory", []):
         if "terminal" in step:
             canon_traj.append(("terminal", step["terminal"]))
+        elif is_signing_step(step):
+            canon_traj.append((
+                "sign",
+                step["sign"],
+                signing_primary_type(step),
+                canon_value(step["signer"]),
+                canon_sig(step.get("save_as")),
+            ))
         else:
             canon_traj.append((
                 "tx",
@@ -293,8 +390,10 @@ def compute_mechanism_signature(public: dict, setup: dict, oracle: dict, family:
                 canon_args(step["function"], step.get("args", [])),
             ))
 
-    canon_goals = [
-        (
+    def canon_goal(c: dict):
+        if c["kind"] in SIGNATURE_KINDS:
+            return (c["kind"], canon_value({k: v for k, v in c.items() if k not in ("id", "kind")}))
+        return (
             c["kind"],
             canon_value(c["contract"]),
             c.get("function"),
@@ -304,13 +403,15 @@ def compute_mechanism_signature(public: dict, setup: dict, oracle: dict, family:
             canon_value(c.get("center")),
             canon_value(c.get("owner")),
         )
-        for c in oracle.get("goal", [])
-    ]
+
+    canon_goals = [canon_goal(c) for c in oracle.get("goal", [])]
 
     canon_invariants = []
     for inv in oracle.get("invariants", []):
         kind = inv["kind"]
-        if kind in ("call_equals", "call_delta", "call_within"):
+        if kind in SIGNATURE_KINDS:
+            canon_invariants.append((kind, canon_value({k: v for k, v in inv.items() if k not in ("id", "kind")})))
+        elif kind in ("call_equals", "call_delta", "call_within"):
             canon_invariants.append((
                 kind,
                 canon_value(inv["contract"]),
@@ -351,4 +452,6 @@ def compute_mechanism_signature(public: dict, setup: dict, oracle: dict, family:
     }
     if canon_faults:
         payload["faults"] = canon_faults
+    if public.get("signing"):
+        payload["signing"] = True
     return json.dumps(payload, sort_keys=True, separators=(",", ":"))

@@ -1,0 +1,49 @@
+steps:
+- signer: deployer
+  args:
+  - '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266'
+  - '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266'
+  deploy_real: rc10
+  as: target
+- signer: deployer
+  to: $target
+  function: grantRole
+  args:
+  - '0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6'
+  - $deployer
+- signer: deployer
+  to: $target
+  function: mint
+  args:
+  - $alice
+  - uri
+  - uri
+- signer: deployer
+  to: $target
+  function: mint
+  args:
+  - $bob
+  - replacement-record
+  - ipfs://replacement
+- signer: deployer
+  to: $target
+  function: grantRole
+  args:
+  - '0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6'
+  - $alice
+- signer: deployer
+  to: $target
+  function: migrate
+  args:
+  - 1
+  - $dave
+  - 2000000000
+  - '0x95aa4b2e4655428c21a917525864bc0069c834c0122ed75a633caf7c195dcb825dfa422bfd4744df38aeb213659948cdd485124fafb239e0ffde8d10748ba9b21b'
+- signer: deployer
+  to: $target
+  function: migrate
+  args:
+  - 1
+  - $alice
+  - 2000000000
+  - '0x85f5ceaf38efab598ee7837151832400696c40987a07be9599b981c8aa7e0d466fc352562bb55e4a985b5beb2cc62a7d140a515173c1184974e099a2bb3884db1c'
