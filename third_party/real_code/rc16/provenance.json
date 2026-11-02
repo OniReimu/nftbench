@@ -1,0 +1,10 @@
+{
+  "id": "rc16",
+  "chain": "ethereum",
+  "address": "0xd022977a22f9a681df8f3c51ed9ad144bdc5bb38",
+  "is_proxy": false,
+  "implementation": "",
+  "sourcify_match_type": "exact_match",
+  "fetched_utc_time": "2024-08-08T14:36:53Z",
+  "creation_hex_sha256": "a7ba01dc7cc75e6f683874e808708d899e7746a3db1313a2ca52efc68811a09b"
+}

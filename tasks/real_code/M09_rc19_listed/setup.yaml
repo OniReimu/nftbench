@@ -1,0 +1,37 @@
+steps:
+- signer: deployer
+  args:
+  - NFT
+  - NFT
+  - 0
+  - 10000
+  - 10000
+  - https://uri/
+  deploy_real: rc19
+  as: target
+- signer: deployer
+  to: $target
+  function: mintForAddress
+  args:
+  - 1
+  - $alice
+- signer: deployer
+  deploy: Market
+  as: market
+  args:
+  - $deployer
+  - 0
+  - false
+- signer: alice
+  to: $target
+  function: approve
+  args:
+  - $market
+  - 1
+- signer: alice
+  to: $market
+  function: list
+  args:
+  - $target
+  - 1
+  - 10000

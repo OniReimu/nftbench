@@ -1,0 +1,23 @@
+steps:
+- as: nft
+  signer: deployer
+  deploy: CollectionV1
+- as: vault
+  signer: deployer
+  deploy: PlainVault
+  args:
+  - $bob
+  - '0x0000000000000000000000000000000000000000'
+- signer: deployer
+  to: $nft
+  function: mint
+  args:
+  - $alice
+  - 7
+- signer: alice
+  to: $nft
+  function: setUser
+  args:
+  - 7
+  - $carol
+  - 4853600000

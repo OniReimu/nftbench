@@ -1,0 +1,28 @@
+steps:
+- as: nft
+  signer: deployer
+  deploy: BasicCollection
+- signer: deployer
+  to: $nft
+  function: mint
+  args:
+  - $alice
+  - 20
+- signer: deployer
+  to: $nft
+  function: mint
+  args:
+  - $alice
+  - 21
+- signer: alice
+  to: $nft
+  function: setApprovalForAll
+  args:
+  - $dave
+  - true
+- signer: alice
+  to: $nft
+  function: setApprovalForAll
+  args:
+  - $carol
+  - true

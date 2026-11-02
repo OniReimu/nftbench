@@ -1,0 +1,20 @@
+steps:
+- signer: deployer
+  args:
+  - NFT
+  - NFT
+  - '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266'
+  deploy_real: rc21
+  as: target
+- signer: deployer
+  to: $target
+  function: safeMint
+  args:
+  - $alice
+  - uri
+- signer: deployer
+  to: $target
+  function: safeMint
+  args:
+  - $carol
+  - '1'

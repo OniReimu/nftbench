@@ -1,0 +1,17 @@
+steps:
+- as: nft
+  signer: deployer
+  deploy: CollectionV1
+- signer: deployer
+  to: $nft
+  function: mint
+  args:
+  - $alice
+  - 7
+- signer: alice
+  to: $nft
+  function: setUser
+  args:
+  - 7
+  - $bob
+  - 4853600000

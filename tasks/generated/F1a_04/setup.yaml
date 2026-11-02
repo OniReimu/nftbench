@@ -1,0 +1,22 @@
+steps:
+- as: nft
+  signer: deployer
+  deploy: BasicCollection
+- signer: deployer
+  to: $nft
+  function: mint
+  args:
+  - $alice
+  - 10
+- signer: deployer
+  to: $nft
+  function: mint
+  args:
+  - $alice
+  - 11
+- signer: alice
+  to: $nft
+  function: approve
+  args:
+  - $carol
+  - 11

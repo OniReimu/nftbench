@@ -1,0 +1,8 @@
+# Notice for rc09
+
+This package contains smart contract source files verified on Sourcify.
+
+## Source Files and Licensing
+
+- File: `PilotBoardingPass.sol`
+  SPDX: MIT

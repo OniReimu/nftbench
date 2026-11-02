@@ -1,0 +1,15 @@
+steps:
+- signer: deployer
+  deploy: $target
+  args: []
+- signer: deployer
+  to: $target
+  function: setMinter
+  args:
+  - $deployer
+- signer: deployer
+  to: $target
+  function: mintTo
+  args:
+  - $alice
+  - uri

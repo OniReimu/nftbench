@@ -1,0 +1,10 @@
+{
+  "id": "rc05",
+  "chain": "base",
+  "address": "0xb48a36d3f9034f802e7dbd123ff1ea15b2297bf3",
+  "is_proxy": false,
+  "implementation": "",
+  "sourcify_match_type": "exact_match",
+  "fetched_utc_time": "2025-07-31T04:01:49Z",
+  "creation_hex_sha256": "c616536e0e84fa4247bb01da0a78ea278666fcdead614f68a3020ee9a0f3ce6e"
+}

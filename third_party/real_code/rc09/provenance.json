@@ -1,0 +1,10 @@
+{
+  "id": "rc09",
+  "chain": "bsc",
+  "address": "0xc267e47f1ba3b6b2bcba58f16298c92cacaf7952",
+  "is_proxy": false,
+  "implementation": "",
+  "sourcify_match_type": "match",
+  "fetched_utc_time": "2026-05-26T04:08:04Z",
+  "creation_hex_sha256": "d195ae29e495e0a553eb0b1952fb94dab2c05fb10b698af5f956e0f5a3575a06"
+}

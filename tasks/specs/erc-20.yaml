@@ -1,0 +1,17 @@
+erc_id: ERC-20
+url: https://eips.ethereum.org/EIPS/eip-20
+retrieved: '2026-10-30'
+note: Verbatim excerpts from the page at url.
+sections:
+  'Methods: transfer': 'Transfers _value amount of tokens to address _to, and MUST fire the Transfer event.
+
+    The function SHOULD throw if the message caller’s account balance does not have enough tokens to spend.
+
+
+    Note Transfers of 0 values MUST be treated as normal transfers and fire the Transfer event.'
+  'Methods: approve': 'Allows _spender to withdraw from your account multiple times, up to the _value amount. If this function is called again it overwrites the current allowance with _value.
+
+
+    NOTE: To prevent attack vectors like the one described here and discussed here,
+
+    clients SHOULD make sure to create user interfaces in such a way that they set the allowance first to 0 before setting it to another value for the same spender.'

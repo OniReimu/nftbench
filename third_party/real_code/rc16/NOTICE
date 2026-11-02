@@ -1,0 +1,44 @@
+# Notice for rc16
+
+This package contains smart contract source files verified on Sourcify.
+
+## Source Files and Licensing
+
+- File: `lib/tokenbound/lib/openzeppelin-contracts/contracts/access/Ownable.sol`
+  SPDX: MIT
+
+- File: `lib/tokenbound/lib/openzeppelin-contracts/contracts/token/ERC721/ERC721.sol`
+  SPDX: MIT
+
+- File: `lib/tokenbound/lib/openzeppelin-contracts/contracts/token/ERC721/IERC721.sol`
+  SPDX: MIT
+
+- File: `lib/tokenbound/lib/openzeppelin-contracts/contracts/token/ERC721/IERC721Receiver.sol`
+  SPDX: MIT
+
+- File: `lib/tokenbound/lib/openzeppelin-contracts/contracts/token/ERC721/extensions/IERC721Metadata.sol`
+  SPDX: MIT
+
+- File: `lib/tokenbound/lib/openzeppelin-contracts/contracts/utils/Address.sol`
+  SPDX: MIT
+
+- File: `lib/tokenbound/lib/openzeppelin-contracts/contracts/utils/Context.sol`
+  SPDX: MIT
+
+- File: `lib/tokenbound/lib/openzeppelin-contracts/contracts/utils/Strings.sol`
+  SPDX: MIT
+
+- File: `lib/tokenbound/lib/openzeppelin-contracts/contracts/utils/introspection/ERC165.sol`
+  SPDX: MIT
+
+- File: `lib/tokenbound/lib/openzeppelin-contracts/contracts/utils/introspection/IERC165.sol`
+  SPDX: MIT
+
+- File: `lib/tokenbound/lib/openzeppelin-contracts/contracts/utils/math/Math.sol`
+  SPDX: MIT
+
+- File: `lib/tokenbound/lib/openzeppelin-contracts/contracts/utils/math/SignedMath.sol`
+  SPDX: MIT
+
+- File: `src/MichiWalletNFT.sol`
+  SPDX: MIT

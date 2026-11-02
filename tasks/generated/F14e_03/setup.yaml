@@ -1,0 +1,60 @@
+steps:
+- as: usdc
+  signer: deployer
+  deploy: StableToken
+  args:
+  - 1000000000000
+- as: collection
+  signer: deployer
+  deploy: BundleCollection14
+- as: market
+  signer: deployer
+  deploy: BundleMarket14
+  args:
+  - $usdc
+  - $collection
+- signer: deployer
+  to: $collection
+  function: mint
+  args:
+  - $bob
+  - 1
+  - 1
+- signer: deployer
+  to: $collection
+  function: mint
+  args:
+  - $bob
+  - 2
+  - 1
+- signer: deployer
+  to: $collection
+  function: setRoyalty
+  args:
+  - 1
+  - $carol
+  - 0
+- signer: deployer
+  to: $collection
+  function: setRoyalty
+  args:
+  - 2
+  - $carol
+  - 0
+- signer: deployer
+  to: $usdc
+  function: transfer
+  args:
+  - $alice
+  - 115000000
+- signer: bob
+  to: $collection
+  function: setApprovalForAll
+  args:
+  - $market
+  - true
+- signer: bob
+  to: $market
+  function: list
+  args:
+  - true

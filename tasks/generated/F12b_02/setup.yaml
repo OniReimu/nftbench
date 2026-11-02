@@ -1,0 +1,4 @@
+steps:
+- as: nft
+  signer: deployer
+  deploy: TraitCollection

@@ -1,0 +1,31 @@
+steps:
+- signer: deployer
+  args:
+  - NFT
+  - NFT
+  - https://uri/
+  - '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266'
+  - 500
+  deploy_real: rc05
+  as: target
+- signer: deployer
+  to: $target
+  function: setAccountManager
+  args:
+  - $deployer
+  - 2
+- signer: deployer
+  to: $target
+  function: execute
+  args:
+  - - '0x5fbdb2315678afecb367f032d93f642f64180aa3'
+    - '0x0000000000000000000000000000000000000000'
+    - '0x70997970C51812dc3A010C7d01b50e0d17dc79C8'
+    - - 1
+    - - 1
+    - - true
+- signer: deployer
+  to: $target
+  function: lock
+  args:
+  - 1

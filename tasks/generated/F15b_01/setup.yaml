@@ -1,0 +1,29 @@
+steps:
+- as: nft
+  signer: deployer
+  deploy: BasicCollection
+  args: []
+- as: campaign
+  signer: deployer
+  deploy: Campaign15
+  args:
+  - $alice
+  - $nft
+  - $dave
+- signer: deployer
+  to: $nft
+  function: mint
+  args:
+  - $alice
+  - 7
+- signer: deployer
+  to: $nft
+  function: mint
+  args:
+  - $alice
+  - 8
+- signer: deployer
+  to: $campaign
+  function: configure
+  args:
+  - false

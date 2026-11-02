@@ -1,0 +1,48 @@
+steps:
+- signer: deployer
+  args:
+  - NFT
+  - NFT
+  - 0
+  - 10000
+  - 10000
+  - https://uri/
+  deploy_real: rc19
+  as: target
+- signer: deployer
+  to: $target
+  function: mintForAddress
+  args:
+  - 1
+  - $alice
+- signer: deployer
+  deploy: StableToken
+  as: payment
+  args:
+  - 20000
+- signer: deployer
+  deploy: Market
+  as: market
+  args:
+  - $payment
+  - 0
+  - false
+- signer: deployer
+  to: $payment
+  function: transfer
+  args:
+  - $bob
+  - 10000
+- signer: bob
+  to: $payment
+  function: approve
+  args:
+  - $market
+  - 10000
+- signer: bob
+  to: $market
+  function: makeOffer
+  args:
+  - $target
+  - 1
+  - 10000

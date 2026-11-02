@@ -1,0 +1,44 @@
+steps:
+- as: usdc
+  signer: deployer
+  deploy: ControlledToken
+  args:
+  - 1000000000000
+- as: nft
+  signer: deployer
+  deploy: RoyaltyCollection
+  args:
+  - $carol
+  - 1000
+- as: market
+  signer: deployer
+  deploy: AdditiveMarket13
+  args:
+  - $usdc
+  - 2000000
+  - $deployer
+- signer: deployer
+  to: $usdc
+  function: transfer
+  args:
+  - $alice
+  - 120000000
+- signer: deployer
+  to: $nft
+  function: mint
+  args:
+  - $dave
+  - 1
+- signer: dave
+  to: $nft
+  function: approve
+  args:
+  - $market
+  - 1
+- signer: dave
+  to: $market
+  function: list
+  args:
+  - $nft
+  - 1
+  - 100000000

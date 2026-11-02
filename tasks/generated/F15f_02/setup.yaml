@@ -1,0 +1,59 @@
+steps:
+- as: payment
+  signer: deployer
+  deploy: StableToken
+  args:
+  - 10000
+- as: nft
+  signer: deployer
+  deploy: BasicCollection
+  args: []
+- as: items
+  signer: deployer
+  deploy: Rentable1155
+  args:
+  - true
+- as: exchange
+  signer: deployer
+  deploy: Exchange15
+  args:
+  - $payment
+  - $nft
+  - $items
+  - $bob
+  - $alice
+  - 100
+- signer: deployer
+  to: $nft
+  function: mint
+  args:
+  - $alice
+  - 7
+- signer: deployer
+  to: $items
+  function: mint(address,uint256,uint256)
+  args:
+  - $alice
+  - 5
+  - 10
+- signer: deployer
+  to: $payment
+  function: transfer
+  args:
+  - $bob
+  - 100
+- signer: bob
+  to: $payment
+  function: approve
+  args:
+  - $exchange
+  - 100
+- signer: bob
+  to: $exchange
+  function: fund
+  args: []
+- signer: bob
+  to: $exchange
+  function: configure
+  args:
+  - 10

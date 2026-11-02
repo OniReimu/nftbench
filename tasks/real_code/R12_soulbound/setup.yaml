@@ -1,0 +1,13 @@
+steps:
+- signer: deployer
+  args:
+  - '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266'
+  - https://uri/
+  deploy_real: rc12
+  as: target
+- signer: deployer
+  to: $target
+  function: ownerMint
+  args:
+  - $alice
+  - uri

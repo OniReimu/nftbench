@@ -1,0 +1,10 @@
+{
+  "id": "rc20",
+  "chain": "polygon",
+  "address": "0x05d5f8f73a525e7b11b0d573e0f7a4b10f53c492",
+  "is_proxy": false,
+  "implementation": "",
+  "sourcify_match_type": "exact_match",
+  "fetched_utc_time": "2026-06-27T15:22:39Z",
+  "creation_hex_sha256": "f107751cfbff95f63e03bd6d02a9212c76c4ee02f39d40a881672edb9281c9d9"
+}

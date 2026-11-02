@@ -1,0 +1,12 @@
+steps:
+- as: badge
+  signer: deployer
+  deploy: BadgeCollection14
+- signer: deployer
+  to: $badge
+  function: mint
+  args:
+  - $alice
+  - 25
+  - true
+  - true

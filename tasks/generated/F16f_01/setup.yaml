@@ -1,0 +1,31 @@
+steps:
+- as: legacy
+  signer: deployer
+  deploy: BurnableCollection
+- as: replacement
+  signer: deployer
+  deploy: Collection16
+  args:
+  - '0x9fe46736679d2d9a65f0992f2272de9f3c7fa6e0'
+- as: exchange
+  signer: deployer
+  deploy: Exchange16
+  args:
+  - $legacy
+  - $replacement
+- signer: deployer
+  to: $legacy
+  function: mint
+  args:
+  - $alice
+  - 7
+- signer: deployer
+  to: $legacy
+  function: mint
+  args:
+  - $alice
+  - 8
+- signer: deployer
+  to: $exchange
+  function: relinquishController
+  args: []

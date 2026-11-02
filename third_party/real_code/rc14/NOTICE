@@ -1,0 +1,8 @@
+# Notice for rc14
+
+This package contains smart contract source files verified on Sourcify.
+
+## Source Files and Licensing
+
+- File: `src/OnePlantSnails.sol`
+  SPDX: MIT

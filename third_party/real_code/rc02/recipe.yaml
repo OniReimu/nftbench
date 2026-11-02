@@ -1,0 +1,15 @@
+steps:
+- signer: deployer
+  deploy: $target
+  args: []
+- signer: deployer
+  to: $target
+  function: grantRole
+  args:
+  - '0xbb99d67b6918694de70ec0223c9220db4cab33527a6e578d6a9d1b7dd96c5594'
+  - $deployer
+- signer: deployer
+  to: $target
+  function: mint(address)
+  args:
+  - $alice

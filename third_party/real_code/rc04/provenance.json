@@ -1,0 +1,10 @@
+{
+  "id": "rc04",
+  "chain": "polygon",
+  "address": "0x597d88b91d946d52556b16a35375b9b14650f165",
+  "is_proxy": true,
+  "implementation": "0x57ebe75862e1a3772b15418c3550bb27055419c1",
+  "sourcify_match_type": "exact_match",
+  "fetched_utc_time": "2026-08-12T11:27:03Z",
+  "creation_hex_sha256": "b7969bc0b07f89d91f547751246f04e23f374cb1b13f12eeaf7b4d2741142ff0"
+}

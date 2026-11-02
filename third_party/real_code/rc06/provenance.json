@@ -1,0 +1,10 @@
+{
+  "id": "rc06",
+  "chain": "base",
+  "address": "0xb102a9e01bf3cf3a15f9c1d7fe25fff6bba713f9",
+  "is_proxy": false,
+  "implementation": "",
+  "sourcify_match_type": "exact_match",
+  "fetched_utc_time": "2026-05-16T23:38:22Z",
+  "creation_hex_sha256": "103e44b0741308418859d36d01bc1e84cb5f06d2d34e4749e7fb66767c0c0634"
+}

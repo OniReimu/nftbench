@@ -1,0 +1,10 @@
+{
+  "id": "rc17",
+  "chain": "base",
+  "address": "0x85ea801b2e74b99f743dc870dd07199003d47145",
+  "is_proxy": false,
+  "implementation": "",
+  "sourcify_match_type": "exact_match",
+  "fetched_utc_time": "2026-07-09T15:15:42Z",
+  "creation_hex_sha256": "9cf1039212a1425c79dc6a5edf88b8dffe0e87aceddc1172aa9f2b136b7a5b6e"
+}

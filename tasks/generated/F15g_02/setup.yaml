@@ -1,0 +1,59 @@
+steps:
+- as: payment
+  signer: deployer
+  deploy: PaymentAsset15
+  args:
+  - 10000000000000000000000
+- as: nft
+  signer: deployer
+  deploy: BasicCollection
+  args: []
+- as: market
+  signer: deployer
+  deploy: Market
+  args:
+  - $payment
+  - 0
+  - false
+- signer: deployer
+  to: $payment
+  function: transfer
+  args:
+  - $bob
+  - 100000000000000000000
+- signer: deployer
+  to: $payment
+  function: transfer
+  args:
+  - $market
+  - 10000000000000000000
+- signer: deployer
+  to: $nft
+  function: mint
+  args:
+  - $alice
+  - 7
+- signer: alice
+  to: $nft
+  function: approve
+  args:
+  - $market
+  - 7
+- signer: bob
+  to: $payment
+  function: approve
+  args:
+  - $market
+  - 100000000000000000000
+- signer: bob
+  to: $market
+  function: makeOffer
+  args:
+  - $nft
+  - 7
+  - 100000000000000000000
+- signer: deployer
+  to: $payment
+  function: setFeeBps
+  args:
+  - 1000

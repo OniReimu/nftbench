@@ -1,0 +1,10 @@
+{
+  "id": "rc01",
+  "chain": "ethereum",
+  "address": "0xa525eb06544e75390f71d836f6f9c9c070f8c649",
+  "is_proxy": true,
+  "implementation": "0xf0cdab9c604c0939f55d0601dd905e21cdf3fbbd",
+  "sourcify_match_type": "exact_match",
+  "fetched_utc_time": "2025-06-23T14:39:21Z",
+  "creation_hex_sha256": "d25d8715354b5bced535c0480a4eb96e7e53d3b0ca40328c7cbb13f84cf4a400"
+}

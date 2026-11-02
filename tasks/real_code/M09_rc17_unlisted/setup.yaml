@@ -1,0 +1,19 @@
+steps:
+- signer: deployer
+  args:
+  - '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266'
+  deploy_real: rc17
+  as: target
+- signer: deployer
+  to: $target
+  function: safeMint
+  args:
+  - $alice
+  - uri
+- signer: deployer
+  deploy: Market
+  as: market
+  args:
+  - $deployer
+  - 0
+  - false

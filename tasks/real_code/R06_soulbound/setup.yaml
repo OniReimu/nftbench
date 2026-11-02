@@ -1,0 +1,13 @@
+steps:
+- signer: deployer
+  args:
+  - '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266'
+  - https://uri/
+  - https://uri/
+  deploy_real: rc06
+  as: target
+- signer: alice
+  to: $target
+  function: mintPassport
+  args:
+  - alice_agent

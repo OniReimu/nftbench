@@ -1,0 +1,16 @@
+steps:
+- signer: deployer
+  args: []
+  deploy_real: rc11
+  as: target
+- signer: deployer
+  to: $target
+  function: setMinter
+  args:
+  - $deployer
+- signer: deployer
+  to: $target
+  function: mintTo
+  args:
+  - $alice
+  - uri

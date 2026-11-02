@@ -1,0 +1,62 @@
+# Notice for rc03
+
+This package contains smart contract source files verified on Sourcify.
+
+## Source Files and Licensing
+
+- File: `@openzeppelin/contracts/access/Ownable.sol`
+  SPDX: MIT
+
+- File: `@openzeppelin/contracts/interfaces/IERC165.sol`
+  SPDX: MIT
+
+- File: `@openzeppelin/contracts/interfaces/IERC2981.sol`
+  SPDX: MIT
+
+- File: `@openzeppelin/contracts/security/ReentrancyGuard.sol`
+  SPDX: MIT
+
+- File: `@openzeppelin/contracts/token/common/ERC2981.sol`
+  SPDX: MIT
+
+- File: `@openzeppelin/contracts/utils/Context.sol`
+  SPDX: MIT
+
+- File: `@openzeppelin/contracts/utils/Strings.sol`
+  SPDX: MIT
+
+- File: `@openzeppelin/contracts/utils/cryptography/ECDSA.sol`
+  SPDX: MIT
+
+- File: `@openzeppelin/contracts/utils/cryptography/draft-EIP712.sol`
+  SPDX: MIT
+
+- File: `@openzeppelin/contracts/utils/introspection/ERC165.sol`
+  SPDX: MIT
+
+- File: `@openzeppelin/contracts/utils/introspection/IERC165.sol`
+  SPDX: MIT
+
+- File: `contracts/project/gaspackapp/IERC5192.sol`
+  SPDX: CC0-1.0
+
+- File: `contracts/project/gaspackapp/IGaspackAppImplementation.sol`
+  SPDX: MIT
+
+- File: `contracts/project/gaspackapp/RekuMembership.sol`
+  SPDX: MIT
+
+- File: `erc721a/contracts/ERC721A.sol`
+  SPDX: MIT
+
+- File: `erc721a/contracts/IERC721A.sol`
+  SPDX: MIT
+
+- File: `operator-filter-registry/src/DefaultOperatorFilterer.sol`
+  SPDX: MIT
+
+- File: `operator-filter-registry/src/IOperatorFilterRegistry.sol`
+  SPDX: MIT
+
+- File: `operator-filter-registry/src/OperatorFilterer.sol`
+  SPDX: MIT

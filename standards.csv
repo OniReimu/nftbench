@@ -1,0 +1,14 @@
+standard,name,eip_url,instance_count
+ERC-721,Non-Fungible Token Standard,https://eips.ethereum.org/EIPS/eip-721,338
+ERC-20,Token Standard,https://eips.ethereum.org/EIPS/eip-20,185
+ERC-6551,Non-fungible Token Bound Accounts,https://eips.ethereum.org/EIPS/eip-6551,151
+ERC-4907,Rental NFT,https://eips.ethereum.org/EIPS/eip-4907,98
+Marketplace,Marketplace Settlement Pattern,N/A,93
+ERC-5192,Minimal Soulbound NFTs,https://eips.ethereum.org/EIPS/eip-5192,89
+ERC-1155,Multi Token Standard,https://eips.ethereum.org/EIPS/eip-1155,60
+ERC-5006,NFT User Extension for ERC-1155,https://eips.ethereum.org/EIPS/eip-5006,49
+ERC-2981,NFT Royalty Standard,https://eips.ethereum.org/EIPS/eip-2981,33
+ERC-7496,NFT Dynamic Traits,https://eips.ethereum.org/EIPS/eip-7496,11
+ERC-4494,Permit for ERC-721,https://eips.ethereum.org/EIPS/eip-4494,9
+ERC-4906,Metadata Update Extension,https://eips.ethereum.org/EIPS/eip-4906,8
+Migration,Contract Migration Pattern,N/A,2

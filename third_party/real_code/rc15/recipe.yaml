@@ -1,0 +1,10 @@
+steps:
+- signer: deployer
+  deploy: $target
+  args: []
+- signer: deployer
+  to: $target
+  function: teamMint
+  args:
+  - 1
+  - $alice

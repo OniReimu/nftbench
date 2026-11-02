@@ -1,0 +1,10 @@
+{
+  "id": "rc12",
+  "chain": "ethereum",
+  "address": "0x62e07b04a7baefeb301841a9e7376afc464a11dd",
+  "is_proxy": false,
+  "implementation": "",
+  "sourcify_match_type": "exact_match",
+  "fetched_utc_time": "2026-10-20T04:31:11Z",
+  "creation_hex_sha256": "87affb2b0aca28759b147640ad07625b3b179a8346225bc442a53e9ddbf7f583"
+}

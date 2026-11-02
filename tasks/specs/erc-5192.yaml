@@ -1,0 +1,7 @@
+erc_id: ERC-5192
+url: https://eips.ethereum.org/EIPS/eip-5192
+retrieved: '2026-10-30'
+note: Verbatim excerpts from the page at url.
+sections:
+  Specification: A token with a uint256 tokenId may be bound to a receiving account with function locked(...) returning true. In this case, all EIP-721 functions of the contract that transfer the token from one account to another must throw.
+  Interface detection: To aid recognition that an EIP-721 token implements “soulbinding” via this EIP upon calling EIP-721’s function supportsInterface(bytes4 interfaceID) external view returns (bool) with interfaceID=0xb45a3c0e, a contract implementing this EIP must return true.

@@ -1,0 +1,10 @@
+steps:
+- as: nft
+  signer: deployer
+  deploy: MutableMetadataCollection
+- signer: deployer
+  to: $nft
+  function: mint
+  args:
+  - $bob
+  - 1

@@ -1,0 +1,22 @@
+steps:
+- {as: nft, signer: deployer, deploy: CollectionV1}
+- signer: deployer
+  to: $nft
+  function: mint
+  args: [$alice, 42]
+- signer: deployer
+  to: $nft
+  function: mint
+  args: [$alice, 43]
+- signer: alice
+  to: $nft
+  function: setLocked
+  args: [42, true]
+- signer: alice
+  to: $nft
+  function: setUser
+  args: [42, $carol, 1702592000]
+- signer: alice
+  to: $nft
+  function: approve
+  args: [$carol, 42]

@@ -1,0 +1,43 @@
+steps:
+- as: avatar
+  signer: deployer
+  deploy: CollectionV1
+- as: equipment
+  signer: deployer
+  deploy: Rentable1155
+  args:
+  - true
+- as: vault
+  signer: deployer
+  deploy: DualVault13
+  args:
+  - false
+  - true
+- as: router
+  signer: deployer
+  deploy: DepositRouter13
+- signer: deployer
+  to: $avatar
+  function: mint
+  args:
+  - $alice
+  - 1
+- signer: deployer
+  to: $equipment
+  function: mint(address,uint256,uint256)
+  args:
+  - $alice
+  - 5
+  - 10
+- signer: alice
+  to: $avatar
+  function: approve
+  args:
+  - $router
+  - 1
+- signer: alice
+  to: $equipment
+  function: setApprovalForAll
+  args:
+  - $router
+  - true

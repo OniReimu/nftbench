@@ -1,0 +1,28 @@
+steps:
+- as: nft
+  signer: deployer
+  deploy: CollectionV1
+- as: use
+  signer: deployer
+  deploy: GatedUse
+  args:
+  - $nft
+- signer: deployer
+  to: $nft
+  function: mint
+  args:
+  - $bob
+  - 9
+- signer: bob
+  to: $nft
+  function: setUser
+  args:
+  - 9
+  - $alice
+  - 1700003600
+- signer: bob
+  to: $nft
+  function: approve
+  args:
+  - '0x0000000000000000000000000000000000000000'
+  - 9

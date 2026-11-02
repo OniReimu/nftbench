@@ -1,0 +1,22 @@
+steps:
+- as: nft
+  signer: deployer
+  deploy: CollectionV2
+- signer: deployer
+  to: $nft
+  function: mint
+  args:
+  - $alice
+  - 35
+- signer: deployer
+  to: $nft
+  function: mint
+  args:
+  - $alice
+  - 36
+- signer: alice
+  to: $nft
+  function: setLocked
+  args:
+  - 35
+  - true

@@ -1,0 +1,10 @@
+{
+  "id": "rc14",
+  "chain": "ethereum",
+  "address": "0x7ffaa700ab98c5c1ff062aec7e768bed5c4d2eb2",
+  "is_proxy": false,
+  "implementation": "",
+  "sourcify_match_type": "match",
+  "fetched_utc_time": "2026-06-19T02:16:28Z",
+  "creation_hex_sha256": "cdf515274a55d6560897d0b4ac3b65e3d656d596c82280fd20785229e718d852"
+}

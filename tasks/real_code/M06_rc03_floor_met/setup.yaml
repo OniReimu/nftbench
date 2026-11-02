@@ -1,0 +1,62 @@
+steps:
+- signer: deployer
+  args:
+  - NFT
+  - NFT
+  - https://uri/
+  - '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266'
+  - '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266'
+  - '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266'
+  - - 0
+    - 10000
+    - 10000
+    - 10000
+  - - 0
+    - 10000
+    - 10000
+    - 10000
+    - 2000000000
+  deploy_real: rc03
+  as: target
+- signer: deployer
+  to: $target
+  function: mintTo
+  args:
+  - - $alice
+  - - 1
+- signer: deployer
+  to: $target
+  function: setLocked
+  args:
+  - false
+- signer: deployer
+  deploy: StableToken
+  as: payment
+  args:
+  - 20000
+- signer: deployer
+  deploy: Market
+  as: market
+  args:
+  - $payment
+  - 0
+  - true
+- signer: deployer
+  to: $payment
+  function: transfer
+  args:
+  - $bob
+  - 10000
+- signer: bob
+  to: $payment
+  function: approve
+  args:
+  - $market
+  - 10000
+- signer: bob
+  to: $market
+  function: makeOffer
+  args:
+  - $target
+  - 1
+  - 10000

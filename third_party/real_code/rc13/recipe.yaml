@@ -1,0 +1,16 @@
+steps:
+- signer: deployer
+  deploy: $target
+  args: []
+- signer: deployer
+  to: $target
+  function: setRoyaltyInfo
+  args:
+  - $deployer
+  - 500
+- signer: deployer
+  to: $target
+  function: airdrop
+  args:
+  - - $alice
+  - 1

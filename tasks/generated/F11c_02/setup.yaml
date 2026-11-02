@@ -1,0 +1,49 @@
+steps:
+- as: usdc
+  signer: deployer
+  deploy: ControlledToken
+  args:
+  - 1000000000000
+- as: nft
+  signer: deployer
+  deploy: BasicCollection
+- as: market
+  signer: deployer
+  deploy: Market
+  args:
+  - $usdc
+  - 0
+  - false
+- signer: deployer
+  to: $usdc
+  function: transfer
+  args:
+  - $alice
+  - 100000000
+- signer: deployer
+  to: $nft
+  function: mint
+  args:
+  - $dave
+  - 7
+- signer: dave
+  to: $nft
+  function: approve
+  args:
+  - $market
+  - 7
+- signer: dave
+  to: $market
+  function: list
+  args:
+  - $nft
+  - 7
+  - 100000000
+faults:
+- kind: exogenous
+  before_submit: 2
+  signer: $deployer
+  to: $usdc
+  function: setPaused
+  args:
+  - true

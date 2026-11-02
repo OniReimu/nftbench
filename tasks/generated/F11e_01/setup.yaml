@@ -1,0 +1,13 @@
+steps:
+- as: nft
+  signer: deployer
+  deploy: PermitCollection11
+- signer: deployer
+  to: $nft
+  function: mint
+  args:
+  - $alice
+  - 7
+faults:
+- kind: ack_lost
+  submit: 1

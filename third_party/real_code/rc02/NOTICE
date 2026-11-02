@@ -1,0 +1,86 @@
+# Notice for rc02
+
+This package contains smart contract source files verified on Sourcify.
+
+## Source Files and Licensing
+
+- File: `@openzeppelin/contracts/access/AccessControl.sol`
+  SPDX: MIT
+
+- File: `@openzeppelin/contracts/access/IAccessControl.sol`
+  SPDX: MIT
+
+- File: `@openzeppelin/contracts/token/ERC721/IERC721.sol`
+  SPDX: MIT
+
+- File: `@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol`
+  SPDX: MIT
+
+- File: `@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol`
+  SPDX: MIT
+
+- File: `@openzeppelin/contracts/utils/Address.sol`
+  SPDX: MIT
+
+- File: `@openzeppelin/contracts/utils/Base64.sol`
+  SPDX: MIT
+
+- File: `@openzeppelin/contracts/utils/Context.sol`
+  SPDX: MIT
+
+- File: `@openzeppelin/contracts/utils/StorageSlot.sol`
+  SPDX: MIT
+
+- File: `@openzeppelin/contracts/utils/Strings.sol`
+  SPDX: MIT
+
+- File: `@openzeppelin/contracts/utils/introspection/ERC165.sol`
+  SPDX: MIT
+
+- File: `@openzeppelin/contracts/utils/introspection/IERC165.sol`
+  SPDX: MIT
+
+- File: `@openzeppelin/contracts/utils/math/Math.sol`
+  SPDX: MIT
+
+- File: `@openzeppelin/contracts/utils/math/SignedMath.sol`
+  SPDX: MIT
+
+- File: `contracts/LockedNFT/Locked721Psi.sol`
+  SPDX: Unlicense
+
+- File: `contracts/LockedNFT/base/ILocked721Base.sol`
+  SPDX: Unlicense
+
+- File: `contracts/LockedNFT/base/Locked721AccessControl.sol`
+  SPDX: Unlicense
+
+- File: `contracts/LockedNFT/base/Locked721Base.sol`
+  SPDX: Unlicense
+
+- File: `contracts/LockedNFT/extensions/LGTServiced721Psi.sol`
+  SPDX: Unlicense
+
+- File: `contracts/Roles/LGTAccessControl.sol`
+  SPDX: Unlicense
+
+- File: `contracts/Roles/NFTManagerAccessControl.sol`
+  SPDX: Unlicense
+
+- File: `contracts/examples/LegitimateNFTMetadata.sol`
+  SPDX: Unlicense
+
+- File: `contracts/examples/LegitimatePhygitalNFTv3PsiMetadata.sol`
+  SPDX: Unlicense
+
+- File: `erc721psi/contracts/ERC721Psi.sol`
+  SPDX: MIT
+
+- File: `solidity-bits/contracts/BitMaps.sol`
+  SPDX: MIT
+
+- File: `solidity-bits/contracts/BitScan.sol`
+  SPDX: MIT
+
+- File: `solidity-bits/contracts/Popcount.sol`
+  SPDX: MIT

@@ -1,0 +1,16 @@
+steps:
+- as: nft
+  signer: deployer
+  deploy: CollectionV1
+- as: vault
+  signer: deployer
+  deploy: ForwardingVault
+  args:
+  - $bob
+  - $dave
+- signer: deployer
+  to: $nft
+  function: mint
+  args:
+  - $alice
+  - 7

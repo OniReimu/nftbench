@@ -1,0 +1,16 @@
+steps:
+- signer: deployer
+  deploy: $target
+  args:
+  - NFT
+  - NFT
+  - 0
+  - 10000
+  - 10000
+  - https://uri/
+- signer: deployer
+  to: $target
+  function: mintForAddress
+  args:
+  - 1
+  - $alice

@@ -1,0 +1,29 @@
+steps:
+- as: nft
+  signer: deployer
+  deploy: Rentable1155
+  args:
+  - true
+- signer: deployer
+  to: $nft
+  function: mint(address,uint256,uint256)
+  args:
+  - $alice
+  - 3
+  - 14
+- signer: alice
+  to: $nft
+  function: createUserRecord
+  args:
+  - $alice
+  - $carol
+  - 3
+  - 6
+  - 1702592000
+- signer: deployer
+  to: $nft
+  function: mint(address,uint256,uint256)
+  args:
+  - $deployer
+  - 99
+  - 1

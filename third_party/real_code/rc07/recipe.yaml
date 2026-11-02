@@ -1,0 +1,12 @@
+steps:
+- signer: deployer
+  deploy: $target
+  args:
+  - '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266'
+  - '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266'
+- signer: deployer
+  to: $target
+  function: mint
+  args:
+  - $alice
+  - uri

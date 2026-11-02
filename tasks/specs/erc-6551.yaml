@@ -1,0 +1,15 @@
+erc_id: ERC-6551
+url: https://eips.ethereum.org/EIPS/eip-6551
+retrieved: '2026-10-30'
+note: Verbatim excerpts from the page at url.
+sections:
+  Registry: The registry MUST deploy all token bound accounts using the create2 opcode so that each account address is deterministic. Each token bound account address SHALL be derived from the unique combination of its implementation address, token contract address, token ID, chain ID, and salt.
+  Valid signers: "     * By default, the holder of the non-fungible token the account is bound to MUST be considered\n     * a valid signer.\n     *\n     * Accounts MAY implement additional authorization logic which invalidates the holder as a\n     * signer or grants signing permissions to other non-holder accounts."
+  Execution Interface: 'All token bound accounts MUST implement an execution interface which allows valid signers to execute arbitrary operations on behalf of the account. Support for an execution interface MUST be signaled by the account using ERC-165 interface detection.
+
+
+    Token bound accounts MAY support the following execution interface:'
+  Execution restrictions: "     * Accounts implementing this interface MAY support additional operations or restrict a signer's\n     * ability to execute certain operations."
+  Account locking: Implement a locking mechanism on the token bound account implementation that prevents malicious owners from extracting assets from the account while locked
+  Variable Execution Interface: This proposal does not require accounts to implement a specific execution interface in order to be compatible, so long as they signal support for at least one execution interface via ERC-165 interface detection. Allowing account developers to choose their own execution interface allows this proposal to support the wide variety of existing execution interfaces and maintain forward compatibility with likely future standardized interfaces.
+  Ownership Cycles: All assets held in a token bound account may be rendered inaccessible if an ownership cycle is created. The simplest example is the case of an ERC-721 token being transferred to its own token bound account. If this occurs, both the ERC-721 token and all of the assets stored in the token bound account would be permanently inaccessible, since the token bound account is incapable of executing a transaction which transfers the ERC-721 token.

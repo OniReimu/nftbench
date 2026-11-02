@@ -1,0 +1,33 @@
+steps:
+- as: usdc
+  signer: deployer
+  deploy: ControlledToken
+  args:
+  - 1000000000000
+- as: rentable
+  signer: deployer
+  deploy: Rentable1155
+  args:
+  - true
+- as: settlement
+  signer: deployer
+  deploy: RentalSettlement18
+- signer: deployer
+  to: $usdc
+  function: transfer
+  args:
+  - $bob
+  - 50000000
+- signer: deployer
+  to: $rentable
+  function: mint(address,uint256,uint256)
+  args:
+  - $alice
+  - 2
+  - 10
+- signer: alice
+  to: $rentable
+  function: setApprovalForAll
+  args:
+  - $settlement
+  - true

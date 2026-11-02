@@ -1,0 +1,60 @@
+steps:
+- as: payment
+  signer: deployer
+  deploy: StableToken
+  args:
+  - 10000000000
+- as: module
+  signer: deployer
+  deploy: CollectionModule15
+  args: []
+- as: extension
+  signer: deployer
+  deploy: CollectionExtension15
+  args: []
+- as: nft
+  signer: deployer
+  deploy: CollectionProxy15
+  args:
+  - $module
+- as: market
+  signer: deployer
+  deploy: Market
+  args:
+  - $payment
+  - 0
+  - false
+- signer: deployer
+  to: $nft
+  function: upgrade
+  args:
+  - $module
+- signer: deployer
+  to: $nft
+  function: finalize
+  args: []
+- signer: deployer
+  to: $payment
+  function: transfer
+  args:
+  - $alice
+  - 100000000
+- signer: deployer
+  to: $nft
+  function: mint
+  args:
+  - $bob
+  - 7
+- signer: bob
+  to: $nft
+  function: approve
+  args:
+  - $market
+  - 7
+- signer: bob
+  to: $market
+  function: list
+  args:
+  - $nft
+  - 7
+  - 100000000

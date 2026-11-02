@@ -1,0 +1,16 @@
+steps:
+- as: nft
+  signer: deployer
+  deploy: PermitLockCollection13
+- signer: deployer
+  to: $nft
+  function: mint
+  args:
+  - $bob
+  - 1
+- signer: bob
+  to: $nft
+  function: approve
+  args:
+  - $alice
+  - 1

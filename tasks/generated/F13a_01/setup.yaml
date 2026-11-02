@@ -1,0 +1,48 @@
+steps:
+- as: usdc
+  signer: deployer
+  deploy: ControlledToken
+  args:
+  - 1000000000000
+- as: nft
+  signer: deployer
+  deploy: TraitCollection13
+- as: market
+  signer: deployer
+  deploy: TraitSettlement13
+  args:
+  - $usdc
+- signer: deployer
+  to: $usdc
+  function: transfer
+  args:
+  - $alice
+  - 100000000
+- signer: deployer
+  to: $nft
+  function: mint
+  args:
+  - $dave
+  - 1
+- signer: dave
+  to: $nft
+  function: approve
+  args:
+  - $market
+  - 1
+- signer: dave
+  to: $market
+  function: listWithGuard
+  args:
+  - $nft
+  - 1
+  - 100000000
+  - '0x72656164696e6573730000000000000000000000000000000000000000000000'
+  - '0x7265616479000000000000000000000000000000000000000000000000000000'
+- signer: deployer
+  to: $nft
+  function: setTrait
+  args:
+  - 1
+  - '0x72656164696e6573730000000000000000000000000000000000000000000000'
+  - '0x7265616479000000000000000000000000000000000000000000000000000000'

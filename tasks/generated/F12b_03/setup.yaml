@@ -1,0 +1,10 @@
+steps:
+- as: nft
+  signer: deployer
+  deploy: TraitCollection
+- signer: deployer
+  to: $nft
+  function: mint
+  args:
+  - $bob
+  - 1

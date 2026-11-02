@@ -1,0 +1,29 @@
+steps:
+- signer: deployer
+  args:
+  - 0
+  - 0
+  deploy_real: rc16
+  as: target
+- signer: deployer
+  to: $target
+  function: setMintPrice
+  args:
+  - 0
+- signer: deployer
+  to: $target
+  function: mint
+  args:
+  - $alice
+- signer: deployer
+  deploy: StableToken
+  as: payment
+  args:
+  - 20000
+- signer: deployer
+  deploy: Market
+  as: market
+  args:
+  - $payment
+  - 0
+  - false

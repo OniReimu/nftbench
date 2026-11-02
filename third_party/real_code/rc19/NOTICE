@@ -1,0 +1,47 @@
+# Notice for rc19
+
+This package contains smart contract source files verified on Sourcify.
+
+## Source Files and Licensing
+
+- File: `@openzeppelin/contracts/access/Ownable.sol`
+  SPDX: MIT
+
+- File: `@openzeppelin/contracts/security/ReentrancyGuard.sol`
+  SPDX: MIT
+
+- File: `@openzeppelin/contracts/token/ERC721/IERC721.sol`
+  SPDX: MIT
+
+- File: `@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol`
+  SPDX: MIT
+
+- File: `@openzeppelin/contracts/token/ERC721/extensions/IERC721Enumerable.sol`
+  SPDX: MIT
+
+- File: `@openzeppelin/contracts/token/ERC721/extensions/IERC721Metadata.sol`
+  SPDX: MIT
+
+- File: `@openzeppelin/contracts/utils/Address.sol`
+  SPDX: MIT
+
+- File: `@openzeppelin/contracts/utils/Context.sol`
+  SPDX: MIT
+
+- File: `@openzeppelin/contracts/utils/Strings.sol`
+  SPDX: MIT
+
+- File: `@openzeppelin/contracts/utils/cryptography/MerkleProof.sol`
+  SPDX: MIT
+
+- File: `@openzeppelin/contracts/utils/introspection/ERC165.sol`
+  SPDX: MIT
+
+- File: `@openzeppelin/contracts/utils/introspection/IERC165.sol`
+  SPDX: MIT
+
+- File: `contracts/Frankenbeers.sol`
+  SPDX: MIT
+
+- File: `erc721a/contracts/ERC721A.sol`
+  SPDX: MIT

@@ -1,0 +1,25 @@
+steps:
+- as: usdc
+  signer: deployer
+  deploy: StableToken
+  args:
+  - 1000000000000
+- as: nft
+  signer: deployer
+  deploy: RoyaltyCollection
+  args:
+  - $carol
+  - 1000
+- as: market
+  signer: deployer
+  deploy: Market
+  args:
+  - $usdc
+  - 250
+  - false
+- signer: deployer
+  to: $nft
+  function: mint
+  args:
+  - $alice
+  - 7

@@ -1,0 +1,10 @@
+{
+  "id": "rc19",
+  "chain": "polygon",
+  "address": "0xcee901a0fc6ca9e0ffb3184539e137beac1aefec",
+  "is_proxy": false,
+  "implementation": "",
+  "sourcify_match_type": "exact_match",
+  "fetched_utc_time": "2026-06-27T06:04:39Z",
+  "creation_hex_sha256": "6a6000e3291e1f3c0ca1411c48267a7401a3752c9f476d2f810bdaba6e5de15a"
+}

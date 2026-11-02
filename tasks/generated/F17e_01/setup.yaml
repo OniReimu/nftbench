@@ -1,0 +1,26 @@
+steps:
+- as: nft
+  signer: deployer
+  deploy: CollectionV1
+- signer: deployer
+  to: $nft
+  function: mint
+  args:
+  - $alice
+  - 7
+- signer: alice
+  to: $nft
+  function: setApprovalForAll
+  args:
+  - $bob
+  - true
+- signer: alice
+  to: $nft
+  function: setUser
+  args:
+  - 7
+  - $carol
+  - 1700002600
+faults:
+- kind: tx_dropped
+  submit: 1

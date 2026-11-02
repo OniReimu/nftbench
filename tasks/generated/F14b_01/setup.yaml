@@ -1,0 +1,48 @@
+steps:
+- as: character
+  signer: deployer
+  deploy: CollectionV1
+- as: equipment
+  signer: deployer
+  deploy: Rentable1155
+  args:
+  - false
+- as: gate
+  signer: deployer
+  deploy: TournamentGate14
+  args:
+  - $character
+  - $equipment
+  - 14
+  - 9
+  - 3
+  - 1700003600
+- signer: deployer
+  to: $character
+  function: mint
+  args:
+  - $bob
+  - 14
+- signer: deployer
+  to: $equipment
+  function: mint(address,uint256,uint256)
+  args:
+  - $bob
+  - 9
+  - 5
+- signer: bob
+  to: $character
+  function: setUser
+  args:
+  - 14
+  - $alice
+  - 1700086400
+- signer: bob
+  to: $equipment
+  function: createUserRecord
+  args:
+  - $bob
+  - $alice
+  - 9
+  - 3
+  - 1700086400

@@ -1,0 +1,28 @@
+steps:
+- as: rentable
+  signer: deployer
+  deploy: Rentable1155
+  args:
+  - false
+- signer: deployer
+  to: $rentable
+  function: mint(address,uint256,uint256)
+  args:
+  - $alice
+  - 7
+  - 5
+- signer: alice
+  to: $rentable
+  function: createUserRecord
+  args:
+  - $alice
+  - $carol
+  - 7
+  - 3
+  - 4853600000
+- signer: deployer
+  to: $rentable
+  function: setApprovalForAll
+  args:
+  - $dave
+  - false

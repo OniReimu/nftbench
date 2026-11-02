@@ -1,0 +1,7 @@
+contracts/out/
+contracts/cache/
+out/
+cache/
+__pycache__/
+*.pyc
+.venv/

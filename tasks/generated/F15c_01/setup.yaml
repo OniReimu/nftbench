@@ -1,0 +1,49 @@
+steps:
+- as: nft
+  signer: deployer
+  deploy: BasicCollection
+  args: []
+- as: payment
+  signer: deployer
+  deploy: StableToken
+  args:
+  - 10000
+- as: market
+  signer: deployer
+  deploy: Market
+  args:
+  - $payment
+  - 0
+  - false
+- as: operator
+  signer: deployer
+  deploy: Operator15
+  args: []
+- as: settings
+  signer: deployer
+  deploy: Settings15
+  args: []
+- signer: deployer
+  to: $nft
+  function: mint
+  args:
+  - $alice
+  - 7
+- signer: deployer
+  to: $nft
+  function: mint
+  args:
+  - $alice
+  - 8
+- signer: alice
+  to: $market
+  function: list
+  args:
+  - $nft
+  - 7
+  - 100
+- signer: deployer
+  to: $settings
+  function: setOperator
+  args:
+  - $market

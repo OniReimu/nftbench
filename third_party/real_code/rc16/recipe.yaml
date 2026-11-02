@@ -1,0 +1,16 @@
+steps:
+- signer: deployer
+  deploy: $target
+  args:
+  - 0
+  - 0
+- signer: deployer
+  to: $target
+  function: setMintPrice
+  args:
+  - 0
+- signer: deployer
+  to: $target
+  function: mint
+  args:
+  - $alice

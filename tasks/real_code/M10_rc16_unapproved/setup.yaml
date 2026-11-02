@@ -1,0 +1,24 @@
+steps:
+- signer: deployer
+  args:
+  - 0
+  - 0
+  deploy_real: rc16
+  as: target
+- signer: deployer
+  to: $target
+  function: setMintPrice
+  args:
+  - 0
+- signer: deployer
+  to: $target
+  function: mint
+  args:
+  - $alice
+- signer: alice
+  to: $target
+  function: transferFrom
+  args:
+  - $alice
+  - $bob
+  - 0

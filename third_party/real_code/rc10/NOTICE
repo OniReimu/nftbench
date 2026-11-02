@@ -1,0 +1,89 @@
+# Notice for rc10
+
+This package contains smart contract source files verified on Sourcify.
+
+## Source Files and Licensing
+
+- File: `lib/openzeppelin-contracts/contracts/access/AccessControl.sol`
+  SPDX: MIT
+
+- File: `lib/openzeppelin-contracts/contracts/access/IAccessControl.sol`
+  SPDX: MIT
+
+- File: `lib/openzeppelin-contracts/contracts/interfaces/IERC165.sol`
+  SPDX: MIT
+
+- File: `lib/openzeppelin-contracts/contracts/interfaces/IERC4906.sol`
+  SPDX: MIT
+
+- File: `lib/openzeppelin-contracts/contracts/interfaces/IERC5267.sol`
+  SPDX: MIT
+
+- File: `lib/openzeppelin-contracts/contracts/interfaces/IERC721.sol`
+  SPDX: MIT
+
+- File: `lib/openzeppelin-contracts/contracts/interfaces/draft-IERC6093.sol`
+  SPDX: MIT
+
+- File: `lib/openzeppelin-contracts/contracts/token/ERC721/ERC721.sol`
+  SPDX: MIT
+
+- File: `lib/openzeppelin-contracts/contracts/token/ERC721/IERC721.sol`
+  SPDX: MIT
+
+- File: `lib/openzeppelin-contracts/contracts/token/ERC721/IERC721Receiver.sol`
+  SPDX: MIT
+
+- File: `lib/openzeppelin-contracts/contracts/token/ERC721/extensions/ERC721URIStorage.sol`
+  SPDX: MIT
+
+- File: `lib/openzeppelin-contracts/contracts/token/ERC721/extensions/IERC721Metadata.sol`
+  SPDX: MIT
+
+- File: `lib/openzeppelin-contracts/contracts/token/ERC721/utils/ERC721Utils.sol`
+  SPDX: MIT
+
+- File: `lib/openzeppelin-contracts/contracts/utils/Bytes.sol`
+  SPDX: MIT
+
+- File: `lib/openzeppelin-contracts/contracts/utils/Context.sol`
+  SPDX: MIT
+
+- File: `lib/openzeppelin-contracts/contracts/utils/Panic.sol`
+  SPDX: MIT
+
+- File: `lib/openzeppelin-contracts/contracts/utils/ShortStrings.sol`
+  SPDX: MIT
+
+- File: `lib/openzeppelin-contracts/contracts/utils/StorageSlot.sol`
+  SPDX: MIT
+
+- File: `lib/openzeppelin-contracts/contracts/utils/Strings.sol`
+  SPDX: MIT
+
+- File: `lib/openzeppelin-contracts/contracts/utils/cryptography/ECDSA.sol`
+  SPDX: MIT
+
+- File: `lib/openzeppelin-contracts/contracts/utils/cryptography/EIP712.sol`
+  SPDX: MIT
+
+- File: `lib/openzeppelin-contracts/contracts/utils/cryptography/MessageHashUtils.sol`
+  SPDX: MIT
+
+- File: `lib/openzeppelin-contracts/contracts/utils/introspection/ERC165.sol`
+  SPDX: MIT
+
+- File: `lib/openzeppelin-contracts/contracts/utils/introspection/IERC165.sol`
+  SPDX: MIT
+
+- File: `lib/openzeppelin-contracts/contracts/utils/math/Math.sol`
+  SPDX: MIT
+
+- File: `lib/openzeppelin-contracts/contracts/utils/math/SafeCast.sol`
+  SPDX: MIT
+
+- File: `lib/openzeppelin-contracts/contracts/utils/math/SignedMath.sol`
+  SPDX: MIT
+
+- File: `src/JetCVSoulbound.sol`
+  SPDX: MIT

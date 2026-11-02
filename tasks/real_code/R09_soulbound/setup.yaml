@@ -1,0 +1,15 @@
+steps:
+- signer: deployer
+  args: []
+  deploy_real: rc09
+  as: target
+- signer: deployer
+  to: $target
+  function: setMintPrice
+  args:
+  - 0
+- signer: deployer
+  to: $target
+  function: adminMint
+  args:
+  - $alice

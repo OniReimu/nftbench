@@ -1,0 +1,38 @@
+steps:
+- as: usdc
+  signer: deployer
+  deploy: StableToken
+  args:
+  - 1000000000000
+- as: nft
+  signer: deployer
+  deploy: BasicCollection
+- as: account_impl
+  signer: deployer
+  deploy: TokenAccountA
+- as: factory
+  signer: deployer
+  deploy: AccountFactory16
+- signer: deployer
+  to: $nft
+  function: mint
+  args:
+  - $carol
+  - 7
+- as: tba
+  implementation: $account_impl
+  signer: deployer
+  to: $factory
+  function: createAccount
+  args:
+  - $account_impl
+  - '0x0000000000000000000000000000000000000000000000000000000000000000'
+  - 31337
+  - $nft
+  - 7
+- signer: deployer
+  to: $usdc
+  function: transfer
+  args:
+  - $tba
+  - 100000000
