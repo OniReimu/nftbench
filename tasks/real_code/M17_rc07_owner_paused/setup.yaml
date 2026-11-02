@@ -1,0 +1,31 @@
+steps:
+- signer: deployer
+  args:
+  - '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266'
+  - '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266'
+  deploy_real: rc07
+  as: target
+- signer: deployer
+  to: $target
+  function: mint
+  args:
+  - $alice
+  - uri
+- signer: deployer
+  to: $target
+  function: setAdmin
+  args:
+  - $alice
+- signer: deployer
+  to: $target
+  function: transferOwnership
+  args:
+  - $alice
+- signer: alice
+  to: $target
+  function: acceptOwnership
+  args: []
+- signer: alice
+  to: $target
+  function: pause
+  args: []

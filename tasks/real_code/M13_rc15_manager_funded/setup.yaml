@@ -1,0 +1,47 @@
+steps:
+- signer: deployer
+  args: []
+  deploy_real: rc15
+  as: target
+- signer: deployer
+  to: $target
+  function: teamMint
+  args:
+  - 1
+  - $alice
+- signer: deployer
+  to: $target
+  function: transferOwnership
+  args:
+  - $alice
+- signer: deployer
+  deploy: StableToken
+  as: payment
+  args:
+  - 20000
+- signer: deployer
+  deploy: Market
+  as: market
+  args:
+  - $payment
+  - 0
+  - true
+- signer: deployer
+  to: $payment
+  function: transfer
+  args:
+  - $bob
+  - 9500
+- signer: bob
+  to: $payment
+  function: approve
+  args:
+  - $market
+  - 9500
+- signer: bob
+  to: $market
+  function: makeOffer
+  args:
+  - $target
+  - 1
+  - 9500

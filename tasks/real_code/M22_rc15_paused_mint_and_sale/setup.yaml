@@ -1,0 +1,68 @@
+steps:
+- signer: deployer
+  args: []
+  deploy_real: rc15
+  as: target
+- signer: deployer
+  to: $target
+  function: teamMint
+  args:
+  - 1
+  - $alice
+- signer: deployer
+  to: $target
+  function: grantRole
+  args:
+  - '0x241ecf16d79d0f8dbfb92cbc07fe17840425976cf0667f022fe9877caa831b08'
+  - $alice
+- signer: deployer
+  to: $target
+  function: setRoyaltyWallet
+  args:
+  - '0x0000000000000000000000000000000000000000'
+- signer: deployer
+  to: $target
+  function: setSaleActive
+  args:
+  - true
+- signer: deployer
+  to: $target
+  function: pause
+  args: []
+- signer: deployer
+  deploy: StableToken
+  as: payment
+  args:
+  - 20000
+- signer: deployer
+  deploy: Market
+  as: market
+  args:
+  - $payment
+  - 0
+  - true
+- signer: alice
+  to: $target
+  function: approve
+  args:
+  - $market
+  - 1
+- signer: deployer
+  to: $payment
+  function: transfer
+  args:
+  - $bob
+  - 10000
+- signer: bob
+  to: $payment
+  function: approve
+  args:
+  - $market
+  - 10000
+- signer: bob
+  to: $market
+  function: makeOffer
+  args:
+  - $target
+  - 1
+  - 10000

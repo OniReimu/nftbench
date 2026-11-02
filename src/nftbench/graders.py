@@ -436,8 +436,97 @@ def _rights_change_allowed(change: dict, allow: list[dict]) -> bool:
     return False
 
 
+def eth_transfers(record: dict) -> list[dict] | None:
+    """Pair the ETH balance changes of one receipt into from/to/wei transfers.
+
+    Fees are zero, so the deltas sum to zero. With one payer every gainer is paid
+    by it; with one payee every loser pays it. Anything else (ETH created or
+    destroyed, or many payers to many payees) cannot be attributed: None.
+
+    These are net changes per receipt, so a cap counts what a transaction costs
+    the payer after any refund inside it, and ETH that a contract routes through
+    another address and back within one transaction is not seen.
+    """
+    moves = eth_movements(record)
+    if not moves:
+        return []
+    if sum(m["delta"] for m in moves) != 0:
+        return None
+    senders = [m for m in moves if m["delta"] < 0]
+    receivers = [m for m in moves if m["delta"] > 0]
+    if len(senders) == 1:
+        return [{"from": senders[0]["address"], "to": r["address"], "wei": r["delta"]} for r in receivers]
+    if len(receivers) == 1:
+        return [{"from": s["address"], "to": receivers[0]["address"], "wei": -s["delta"]} for s in senders]
+    return None
+
+
+def _check_eth_allow(eth_allow) -> None:
+    if not isinstance(eth_allow, list):
+        raise ValueError("eth_allow must be a list")
+    for rule in eth_allow:
+        if not isinstance(rule, dict) or not {"from", "to", "max_wei"} <= rule.keys():
+            raise ValueError(f"eth_allow entry needs from, to and max_wei: {rule!r}")
+        if not isinstance(rule["max_wei"], int) or isinstance(rule["max_wei"], bool) or rule["max_wei"] < 0:
+            raise ValueError(f"eth_allow max_wei must be a non-negative int: {rule!r}")
+
+
+def _eth_movements_allowed(record: dict, eth_allow: list[dict], used: list[int]) -> bool:
+    """Every ETH transfer of the record fits an entry; `used` holds wei moved per entry so far."""
+    transfers = eth_transfers(record)
+    if transfers is None:
+        return False
+    for transfer in transfers:
+        for i, rule in enumerate(eth_allow):
+            if transfer["from"] != str(rule["from"]).lower() or transfer["to"] != str(rule["to"]).lower():
+                continue
+            if used[i] + transfer["wei"] > rule["max_wei"]:
+                continue
+            used[i] += transfer["wei"]
+            break
+        else:
+            return False
+    return True
+
+
+def _holds_throughout(env, clause: dict) -> bool:
+    """The view equals `equals` at S0's block and at every block mined since.
+
+    Each block after S0 holds exactly one executed transaction or one time advance
+    (checked by `_blocks_match_trace`), so this covers the state after every step.
+    Reads use eth_call at each block number: Anvil serves historical state.
+    """
+    call = clause.get("call", clause)
+    contract = env.resolve(call["contract"])
+    entry = abi_tools.find_function(env.abi_for(contract), call["function"])
+    data = abi_tools.encode_call(entry, env.resolve(call.get("args", [])))
+    index = call.get("index", 0)
+    expected = env.resolve(clause["equals"])
+    for number in range(env.s0_head_number, env.chain.block_number() + 1):
+        try:
+            raw = env.chain.rpc("eth_call", {"to": contract, "data": data, "value": "0x0"}, hex(number))
+            value = abi_tools.decode_output(entry, raw)[index]
+        except Exception:
+            # A failed or undecodable read is not evidence the view held.
+            return False
+        if not _same(value, expected):
+            return False
+    return True
+
+
 def _trace_clause(env, clause: dict, executed: list[dict]) -> bool:
     kind = clause["kind"]
+    if kind == "no_movement_except" and clause.get("eth_allow") is not None:
+        allow = env.resolve(clause.get("allow", []))
+        eth_allow = env.resolve(clause["eth_allow"])
+        _check_eth_allow(eth_allow)
+        used = [0] * len(eth_allow)
+        for record in executed:
+            if not _eth_movements_allowed(record, eth_allow, used):
+                return False
+            if not all(_movement_allowed(t, allow) for t in asset_transfers(record)):
+                return False
+        return True
     if kind == "no_movement_except":
         allow = env.resolve(clause.get("allow", []))
         for record in executed:
@@ -446,6 +535,8 @@ def _trace_clause(env, clause: dict, executed: list[dict]) -> bool:
             if not all(_movement_allowed(t, allow) for t in asset_transfers(record)):
                 return False
         return True
+    if kind == "holds_throughout":
+        return _holds_throughout(env, clause)
     if kind == "no_approvals_granted":
         # A violation when emitted: a later revoke does not undo the grant.
         allow = env.resolve(clause.get("allow", []))

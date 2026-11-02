@@ -1,0 +1,35 @@
+steps:
+- signer: deployer
+  deploy_real: rc01
+  as: implementation
+- signer: deployer
+  args:
+  - $implementation
+  - '0xf399e22e000000000000000000000000f39fd6e51aad88f6f4ce6ab8827279cfffb922660000000000000000000000000000000000000000000000000000000000000040000000000000000000000000000000000000000000000000000000000000000c68747470733a2f2f7572692f0000000000000000000000000000000000000000'
+  deploy_real_proxy: $implementation
+  as: target
+- signer: deployer
+  to: $target
+  function: grantRole
+  args:
+  - '0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6'
+  - $deployer
+- signer: deployer
+  to: $target
+  function: mintTo
+  args:
+  - $alice
+- signer: deployer
+  deploy: Market
+  as: market
+  args:
+  - $deployer
+  - 0
+  - false
+- signer: alice
+  to: $market
+  function: list
+  args:
+  - $target
+  - 1
+  - 1000

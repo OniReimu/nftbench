@@ -1,0 +1,44 @@
+steps:
+- signer: deployer
+  args: []
+  deploy_real: rc13
+  as: target
+- signer: deployer
+  to: $target
+  function: setRoyaltyInfo
+  args:
+  - $deployer
+  - 500
+- signer: deployer
+  to: $target
+  function: airdrop
+  args:
+  - - $alice
+  - 1
+- signer: deployer
+  to: $target
+  function: airdrop
+  args:
+  - - $alice
+  - 1
+- signer: deployer
+  deploy: Market
+  as: market
+  args:
+  - $deployer
+  - 0
+  - false
+- signer: alice
+  to: $target
+  function: transferFrom
+  args:
+  - $alice
+  - $bob
+  - 1
+- signer: bob
+  to: $market
+  function: list
+  args:
+  - $target
+  - 1
+  - 10000

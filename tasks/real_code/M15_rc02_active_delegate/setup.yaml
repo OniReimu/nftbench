@@ -1,0 +1,41 @@
+steps:
+- signer: deployer
+  args: []
+  deploy_real: rc02
+  as: target
+- signer: deployer
+  to: $target
+  function: grantRole
+  args:
+  - '0xbb99d67b6918694de70ec0223c9220db4cab33527a6e578d6a9d1b7dd96c5594'
+  - $deployer
+- signer: deployer
+  to: $target
+  function: mint(address)
+  args:
+  - $alice
+- signer: deployer
+  to: $target
+  function: setTokenLock
+  args:
+  - 0
+  - false
+- signer: alice
+  to: $target
+  function: transferFrom
+  args:
+  - $alice
+  - $carol
+  - 0
+- signer: deployer
+  to: $target
+  function: grantRole
+  args:
+  - '0x72d64eedbf63ef7644113b50b68861b1541fedf25e444f932c10247ea6a64249'
+  - $alice
+- signer: deployer
+  to: $target
+  function: grantRole
+  args:
+  - '0xbb99d67b6918694de70ec0223c9220db4cab33527a6e578d6a9d1b7dd96c5594'
+  - $alice

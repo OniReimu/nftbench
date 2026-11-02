@@ -1,0 +1,71 @@
+steps:
+- signer: deployer
+  args:
+  - https://uri/
+  - '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266'
+  deploy_real: rc14
+  as: target
+- signer: deployer
+  to: $target
+  function: setMintConfig
+  args:
+  - true
+  - true
+- signer: alice
+  to: $target
+  function: freeMint
+  args: []
+- signer: deployer
+  to: $target
+  function: setCollabSpots
+  args:
+  - 1
+  - - $carol
+- signer: carol
+  to: $target
+  function: mintCollab
+  args: []
+- signer: deployer
+  deploy: StableToken
+  as: payment
+  args:
+  - 10000
+- signer: deployer
+  deploy: Market
+  as: market
+  args:
+  - $payment
+  - 0
+  - true
+- signer: deployer
+  to: $payment
+  function: transfer
+  args:
+  - $bob
+  - 10000
+- signer: bob
+  to: $payment
+  function: approve
+  args:
+  - $market
+  - 10000
+- signer: bob
+  to: $market
+  function: makeOffer
+  args:
+  - $target
+  - 1
+  - 10000
+- signer: carol
+  to: $target
+  function: approve
+  args:
+  - $market
+  - 2
+- signer: carol
+  to: $market
+  function: list
+  args:
+  - $target
+  - 2
+  - 9800

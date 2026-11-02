@@ -11,6 +11,12 @@ steps:
   - $alice
   - uri
 - signer: deployer
+  to: $target
+  function: safeMint
+  args:
+  - $alice
+  - uri
+- signer: deployer
   deploy: Market
   as: market
   args:
@@ -22,11 +28,11 @@ steps:
   function: approve
   args:
   - $market
-  - 0
+  - 1
 - signer: alice
   to: $market
   function: list
   args:
   - $target
-  - 0
+  - 1
   - 10000

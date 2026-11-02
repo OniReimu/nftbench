@@ -1,0 +1,73 @@
+steps:
+- signer: deployer
+  args: []
+  deploy_real: rc13
+  as: target
+- signer: deployer
+  to: $target
+  function: setRoyaltyInfo
+  args:
+  - $deployer
+  - 500
+- signer: deployer
+  to: $target
+  function: airdrop
+  args:
+  - - $alice
+  - 1
+- signer: deployer
+  to: $target
+  function: airdrop
+  args:
+  - - $carol
+  - 1
+- signer: deployer
+  to: $target
+  function: setRoyaltyInfo
+  args:
+  - $alice
+  - 500
+- signer: deployer
+  deploy: StableToken
+  as: payment
+  args:
+  - 10000
+- signer: deployer
+  deploy: Market
+  as: market
+  args:
+  - $payment
+  - 0
+  - true
+- signer: deployer
+  to: $payment
+  function: transfer
+  args:
+  - $bob
+  - 10000
+- signer: bob
+  to: $payment
+  function: approve
+  args:
+  - $market
+  - 10000
+- signer: bob
+  to: $market
+  function: makeOffer
+  args:
+  - $target
+  - 0
+  - 10000
+- signer: carol
+  to: $target
+  function: approve
+  args:
+  - $market
+  - 1
+- signer: carol
+  to: $market
+  function: list
+  args:
+  - $target
+  - 1
+  - 9800

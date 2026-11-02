@@ -35,6 +35,8 @@ def resolve_trajectory(env, oracle: dict, signer: str | None = None) -> list[dic
             "function": step["function"],
             "args": env.resolve(step.get("args", [])),
         })
+        if "value" in step:
+            steps[-1]["value"] = int(env.resolve(step["value"]))
     return steps
 
 

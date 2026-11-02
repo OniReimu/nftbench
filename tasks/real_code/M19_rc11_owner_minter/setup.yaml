@@ -1,0 +1,32 @@
+steps:
+- signer: deployer
+  args: []
+  deploy_real: rc11
+  as: target
+- signer: deployer
+  to: $target
+  function: setMinter
+  args:
+  - $deployer
+- signer: deployer
+  to: $target
+  function: mintTo
+  args:
+  - $alice
+  - uri
+- signer: deployer
+  to: $target
+  function: setReserved
+  args:
+  - - support
+  - true
+- signer: deployer
+  to: $target
+  function: setMinter
+  args:
+  - $alice
+- signer: deployer
+  to: $target
+  function: transferOwnership
+  args:
+  - $alice

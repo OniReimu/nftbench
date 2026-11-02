@@ -1,0 +1,42 @@
+steps:
+- signer: deployer
+  args:
+  - NFT
+  - NFT
+  - 0
+  - 10000
+  - 10000
+  - https://uri/
+  deploy_real: rc19
+  as: target
+- signer: deployer
+  to: $target
+  function: mintForAddress
+  args:
+  - 1
+  - $alice
+- signer: deployer
+  to: $target
+  function: setCost
+  args:
+  - 10000000000000000
+- signer: deployer
+  to: $target
+  function: setMaxMintAmountPerTx
+  args:
+  - 1
+- signer: deployer
+  to: $target
+  function: setMerkleRoot
+  args:
+  - '0x00314e565e0574cb412563df634608d76f5c59d9f817e85966100ec1d48005c0'
+- signer: deployer
+  to: $target
+  function: setWhitelistMintEnabled
+  args:
+  - true
+- signer: deployer
+  to: $target
+  function: transferOwnership
+  args:
+  - $alice

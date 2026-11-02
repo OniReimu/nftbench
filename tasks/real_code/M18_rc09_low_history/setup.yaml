@@ -1,0 +1,26 @@
+steps:
+- signer: deployer
+  args: []
+  deploy_real: rc09
+  as: target
+- signer: deployer
+  to: $target
+  function: setMintPrice
+  args:
+  - 0
+- signer: deployer
+  to: $target
+  function: adminMint
+  args:
+  - $alice
+- signer: deployer
+  to: $target
+  function: setTierThresholds
+  args:
+  - - 0
+    - 600
+- signer: deployer
+  to: $target
+  function: addMilesOperator
+  args:
+  - $alice

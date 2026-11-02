@@ -11,7 +11,7 @@ steps:
   to: $nft
   function: mint
   args:
-  - $alice
+  - $bob
   - 7
 - signer: deployer
   to: $rentable
@@ -20,3 +20,10 @@ steps:
   - $alice
   - 5
   - 5
+- signer: bob
+  to: $nft
+  function: setUser
+  args:
+  - 7
+  - $carol
+  - 4853600000

@@ -16,6 +16,12 @@ steps:
   - - $alice
   - 1
 - signer: deployer
+  to: $target
+  function: airdrop
+  args:
+  - - $alice
+  - 1
+- signer: deployer
   deploy: Market
   as: market
   args:
@@ -27,11 +33,11 @@ steps:
   function: approve
   args:
   - $market
-  - 0
+  - 1
 - signer: alice
   to: $market
   function: list
   args:
   - $target
-  - 0
+  - 1
   - 10000
