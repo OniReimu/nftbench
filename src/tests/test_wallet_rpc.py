@@ -78,6 +78,16 @@ def listening(port):
         return probe.connect_ex(("127.0.0.1", port)) == 0
 
 
+TIMING_FIELDS = ("t_start", "t_end", "latency_s", "tool_latency_s", "t_episode_start", "t_episode_end")
+
+
+def untimed(path):
+    return [
+        json.dumps({k: v for k, v in json.loads(line).items() if k not in TIMING_FIELDS}, sort_keys=True)
+        for line in path.read_text().splitlines()
+    ]
+
+
 def test_off_by_default_opens_no_port_and_outputs_are_identical(monkeypatch, root, tmp_path):
     def forbidden(*args, **kwargs):
         raise AssertionError("a wallet endpoint was started without --wallet-rpc")
@@ -98,7 +108,8 @@ def test_off_by_default_opens_no_port_and_outputs_are_identical(monkeypatch, roo
     with Environment("P1", root=root) as direct:
         direct_path = tmp_path / "direct.jsonl"
         report = run_llm(direct, ScriptedBackend([INFEASIBLE]), transcript_path=direct_path)
-    assert (out / "P1" / "transcript.jsonl").read_bytes() == direct_path.read_bytes()
+    # Wall-clock fields differ between any two runs; everything else is byte-identical.
+    assert untimed(out / "P1" / "transcript.jsonl") == untimed(direct_path)
     assert json.loads((out / "P1" / "result.json").read_text())["report"] == json.loads(json.dumps(report))
     assert '"wallet_rpc"' not in (out / "P1" / "transcript.jsonl").read_text()
 

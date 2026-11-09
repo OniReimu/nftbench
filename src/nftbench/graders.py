@@ -618,12 +618,18 @@ def _signature_matches(record: dict, spec: dict) -> bool:
     typed = record.get("typed_data")
     if record["tool"] != "sign_typed_data" or not isinstance(typed, dict):
         return False
-    types = typed["types"]
-    if "types" in spec and types != spec["types"]:
-        return False
     domain_types = {"EIP712Domain": [{"name": name, "type": kind} for name, kind in (
         ("name", "string"), ("version", "string"), ("chainId", "uint256"),
         ("verifyingContract", "address"), ("salt", "bytes32"))]}
+    # Wallets commonly list EIP712Domain in types; when it declares exactly the domain's own fields in canonical
+    # order it leaves the digest unchanged, so it is dropped before comparing the rule's types.
+    types = dict(typed["types"])
+    if "EIP712Domain" in types:
+        if not isinstance(typed["domain"], dict) or types.pop("EIP712Domain") != [
+                field for field in domain_types["EIP712Domain"] if field["name"] in typed["domain"]]:
+            return False
+    if "types" in spec and types != spec["types"]:
+        return False
     if "domain" in spec and not _value_matches(typed["domain"], spec["domain"], "EIP712Domain", domain_types):
         return False
     primary_type = spec.get("primary_type", spec.get("primaryType"))
