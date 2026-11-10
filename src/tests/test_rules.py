@@ -641,6 +641,7 @@ def test_fingerprint_covers_the_union(envs):
 
 # Canonical registry.
 @pytest.mark.parametrize("instance", ["A1", "A2", "A3", "A4"])
+@pytest.mark.skipif(not (CONTRACTS_DIR / "deps.lock").exists(), reason=f"dependency lock not shipped: {CONTRACTS_DIR / 'deps.lock'} missing")
 def test_registry_is_canonical_and_matches_the_recorded_mainnet_hash(envs, instance):
     env = envs[instance]
     assert env.symbols["registry"] == REGISTRY

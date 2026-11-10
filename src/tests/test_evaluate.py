@@ -705,6 +705,12 @@ def test_run_json_records_code_revision_and_resume_appends_a_new_one(tmp_path, m
 
 
 def test_code_revision_from_git_then_env_then_null(monkeypatch):
+    root = Path(evaluate.__file__).resolve().parents[2]
+    if shutil.which("git") is None:
+        pytest.skip("git checkout required: git executable not found")
+    probe = subprocess.run(["git", "-C", str(root), "rev-parse", "--is-inside-work-tree"], capture_output=True, text=True)
+    if probe.returncode != 0 or probe.stdout.strip() != "true":
+        pytest.skip(f"git checkout required: {root} is not inside a git work tree")
     rev, dirty = evaluate.code_revision()
     assert len(rev) == 40 and int(rev, 16) >= 0 and isinstance(dirty, bool)
 

@@ -236,6 +236,7 @@ def test_planted_funnel_row_with_locked_false_and_transfer_revert_fails_g5():
     assert strat_sb == "soulbound"
 
 
+@pytest.mark.skipif(not RECIPES_DIR.is_dir(), reason=f"replay recipes not shipped: {RECIPES_DIR} missing")
 def test_planted_recipe_step_that_reverts_fails_contract(shared_anvil, proxy_bc, tmp_path):
     """A planted recipe step that reverts fails the contract replay (reverts are never swallowed)."""
     selection_csv = REAL_CODE_DIR / "selection.csv"
@@ -268,6 +269,7 @@ def test_planted_recipe_step_that_reverts_fails_contract(shared_anvil, proxy_bc,
     assert "reverted" in str(exc_info.value).lower()
 
 
+@pytest.mark.skipif(not RECIPES_DIR.is_dir(), reason=f"replay recipes not shipped: {RECIPES_DIR} missing")
 def test_replay_passes_for_every_selected_contract_with_real_anvil(shared_anvil, proxy_bc):
     """Replay passes for every selected contract on real Anvil and facts match stratum requirements."""
     selection_csv = REAL_CODE_DIR / "selection.csv"
